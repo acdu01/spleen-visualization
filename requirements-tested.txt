@@ -1,0 +1,12 @@
+# Direct dependency constraints verified on Linux with Python 3.12.
+# Optional reproducibility aid; normal installs use pyproject.toml ranges.
+numpy==2.5.5
+nibabel==5.5.0
+matplotlib==3.11.2
+streamlit==1.67.0
+requests==2.34.2
+scikit-learn==1.9.1
+scipy==1.18.1
+threadpoolctl==3.8.0
+pytest==9.2.0
+build==1.6.1

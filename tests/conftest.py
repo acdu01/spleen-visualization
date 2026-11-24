@@ -31,3 +31,7 @@ def save_pair(root, ct, mask, affine, mask_affine=None):
 def data_root(tmp_path, case):
     save_pair(tmp_path, case.ct, case.mask, case.affine)
     return tmp_path
+
+@pytest.fixture
+def pair_writer():
+    return save_pair

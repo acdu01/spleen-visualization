@@ -11,7 +11,7 @@ from .grids import grid_path, make_grid, save_grid
 from .metrics import compare
 
 def default_root():
-    return Path(os.environ.get("SPLEEN_DATA_DIR", Path(__file__).resolve().parents[1] / "data"))
+    return Path(os.environ.get("SPLEEN_DATA_DIR", Path.cwd() / "data"))
 
 def prepare_one(task):
     root, case_id, factors = task
@@ -39,7 +39,11 @@ def main(argv=None):
     prepare.add_argument("--workers", type=int, default=1)
     inspect = commands.add_parser("inspect", help="Read one case's geometry and labels.")
     inspect.add_argument("case_id")
+    from .prediction.commands import add_commands, dispatch
+    add_commands(commands)
     args = parser.parse_args(argv)
+    if dispatch(args, parser):
+        return
     if args.command == "fetch":
         fetch_cases(args.data_dir, args.cases)
         return

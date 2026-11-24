@@ -84,3 +84,26 @@ def load_case(root, case_id):
         "ct_path": str(image_path), "mask_path": str(mask_path),
         "orientation": "RAS", "units": "mm",
     })
+
+@dataclass(frozen=True)
+class CTVolume:
+    """An image with no mask requirement, used by standalone prediction."""
+    ct: np.ndarray
+    affine: np.ndarray
+
+    @property
+    def spacing(self):
+        return np.linalg.norm(self.affine[:3, :3], axis=0)
+
+def load_ct(path):
+    image = nib.load(Path(path))
+    _check_header(image)
+    image = nib.as_closest_canonical(image)
+    spacing = np.linalg.norm(image.affine[:3, :3], axis=0)
+    if not np.allclose(image.affine[:3, :3], np.diag(spacing), atol=1e-4, rtol=0):
+        raise ValueError("Tilted or sheared grids are not supported.")
+    ct = image.get_fdata(dtype=np.float32, caching="unchanged")
+    if not np.isfinite(ct).all():
+        raise ValueError("CT contains non-finite values.")
+    ct.setflags(write=False)
+    return CTVolume(ct, image.affine.copy())

@@ -47,3 +47,24 @@ A 4× cell spans 20 mm along the slice axis.
 Fractional volume preserves the supplied label volume.
 Hard volume can change as the boundary becomes blocky.
 Dice measures this representation change, not model accuracy.
+
+## Prediction branch
+
+The viewer and prediction code share validated loading, not model inputs.
+The label mask is never passed to feature extraction.
+
+```text
+CT -> prediction.features -> prediction.model -> scores
+Mask -> native slice targets -> prediction.experiment -> metrics
+Saved experiment -> prediction.ui -> viewer
+```
+
+The CLI offers demo, train, predict and view in addition to data commands.
+Training runs separately; opening the viewer never starts training.
+The ML extra is required only for training. Saved models use numeric NPZ
+arrays and JSON metadata, with allow_pickle=False on every read.
+
+Models, reports and predictions belong under ignored outputs/.
+Source packages explicitly exclude private/, data/, outputs/ and logs/.
+Default data paths use the current working directory, including wheel installs.
+See [PREDICTION.md](PREDICTION.md) for grouping, targets and evaluation rules.

@@ -8,3 +8,6 @@ prune outputs
 prune logs
 prune .venv
 global-exclude __pycache__ *.py[cod]
+include requirements-tested.txt
+prune build
+prune dist

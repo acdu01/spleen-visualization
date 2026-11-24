@@ -25,6 +25,8 @@ def main():
     st.title("Spleen · Resolution Lab")
     st.write("See what changes when a CT scan uses fewer voxels.")
     root = default_root()
+    if (root / "synthetic.json").is_file():
+        st.warning("Synthetic demo: these are made-up shapes, not human CT scans.")
     cases = available_cases(root)
     if not cases:
         st.info("Fetch a labelled scan to begin. The first sample is about 11 MB.")
@@ -122,6 +124,9 @@ def main():
             st.download_button("Download cohort measurements", csv_bytes(rows), "cohort.csv", "text/csv")
         else:
             st.write("Run preparation to compare cases here.")
+    with st.expander("Slice prediction baseline"):
+        from .prediction.ui import results_panel
+        results_panel()
     with st.expander("About this experiment"):
         st.write("These are supplied reference labels, not model predictions. "
                  "This tool measures representation changes and is for research exploration.")
