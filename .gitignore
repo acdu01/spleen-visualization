@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+data/
+outputs/
+logs/
+.streamlit/secrets.toml
+
+# Personal setup and local-only history backups.
+/private/
+.env
+.env.*
+!.env.example
