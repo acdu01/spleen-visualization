@@ -1,4 +1,4 @@
-# Spleen · Resolution Lab
+# Spleen Visualization
 
 A portable CT viewer and CPU baseline for **spleen presence per slice**.
 

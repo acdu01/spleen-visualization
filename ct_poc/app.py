@@ -20,9 +20,9 @@ def csv_bytes(rows):
     return stream.getvalue().encode()
 
 def main():
-    st.set_page_config(page_title="Spleen · Resolution Lab", page_icon="◈", layout="wide")
+    st.set_page_config(page_title="Spleen Visualization", page_icon="◈", layout="wide")
     st.caption("CT  /  DATA EXPLORATION")
-    st.title("Spleen · Resolution Lab")
+    st.title("Spleen Visualization")
     st.write("See what changes when a CT scan uses fewer voxels.")
     root = default_root()
     if (root / "synthetic.json").is_file():
